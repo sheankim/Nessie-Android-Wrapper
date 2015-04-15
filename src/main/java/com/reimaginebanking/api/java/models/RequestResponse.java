@@ -1,0 +1,14 @@
+package com.reimaginebanking.api.java.models;
+
+/**
+ * Created by kco942 on 4/9/15.
+ */
+public class RequestResponse {
+    private int code;
+    private String message;
+
+    public RequestResponse(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+}
