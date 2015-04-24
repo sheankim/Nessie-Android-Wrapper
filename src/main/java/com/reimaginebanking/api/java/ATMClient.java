@@ -9,6 +9,7 @@ import com.reimaginebanking.api.java.requests.NessieService;
 public class ATMClient {
 
     public ATM getAtm(NessieService nessieService, String id) {
-        nessieService.
+       // nessieService.
+        return null;
     }
 }

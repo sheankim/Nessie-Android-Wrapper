@@ -1,10 +1,24 @@
 package com.reimaginebanking.api.java.requests;
 
-import com.reimaginebanking.api.java.models.*;
-import retrofit.Callback;
-import retrofit.http.*;
+import com.reimaginebanking.api.java.models.ATM;
+import com.reimaginebanking.api.java.models.Account;
+import com.reimaginebanking.api.java.models.Bill;
+import com.reimaginebanking.api.java.models.Branch;
+import com.reimaginebanking.api.java.models.Customer;
+import com.reimaginebanking.api.java.models.RequestResponse;
+import com.reimaginebanking.api.java.models.Transaction;
 
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.http.Body;
+import retrofit.http.DELETE;
+import retrofit.http.GET;
+import retrofit.http.Headers;
+import retrofit.http.POST;
+import retrofit.http.PUT;
+import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * Created by kco942 on 4/9/15.
@@ -38,13 +52,13 @@ public interface NessieService {
     void getBranches(@Query("key") String key, Callback<List<Branch>> cb);
 
     @GET("/branches/{id}")
-    void getBranch(@Path("id") String id, Callback<Branch> cb);
+    void getBranch(@Query("key") String key, @Path("id") String id, Callback<Branch> cb);
 
     @GET("/atms")
     void getATMs(@Query("key") String key, Callback<List<ATM>> cb);
 
     @GET("/atms/{id}")
-    void getATM(@Path("id") String id, Callback<ATM> cb);
+    void getATM(@Query("key") String key,@Path("id") String id, Callback<ATM> cb);
 
     @GET("/accounts/{id}")
     void getAccount(@Query("key") String key, @Path("id") String id, Callback<Account> cb);
