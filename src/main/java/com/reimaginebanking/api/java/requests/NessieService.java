@@ -71,7 +71,7 @@ public interface NessieService {
 
     @Headers("Content-Type: application/json")
     @POST("/accounts/{id}/bills")
-    void createAccount(@Query("key") String key, @Path("id") String id, @Body Bill bill, Callback<RequestResponse> cb);
+    void createBill(@Query("key") String key, @Path("id") String id, @Body Bill bill, Callback<RequestResponse> cb);
 
     @Headers("Content-Type: application/json")
     @PUT("/accounts/{account_id}/bills/{bill_id}")
@@ -89,8 +89,8 @@ public interface NessieService {
 
     @Headers("Content-Type: application/json")
     @PUT("/accounts/{account_id}/transactions/{transaction_id}")
-    void getTransaction(@Query("key") String key, @Path("account_id") String account_id, @Path("transaction_id") String transaction_id, @Body Transaction transaction, Callback<Transaction> cb);
+    void updateTransaction(@Query("key") String key, @Path("account_id") String account_id, @Path("transaction_id") String transaction_id, @Body Transaction transaction, Callback<Transaction> cb);
 
     @DELETE("/accounts/{account_id}/transactions/{transaction_id}")
-    void deleteTransaction(@Query("key") String key, @Path("account_id") String account_id, @Path("transaction_id") String transaction_id, Callback<Transaction> cb);
+    void deleteTransaction(@Query("key") String key, @Path("account_id") String account_id, @Path("transaction_id") String transaction_id, Callback<RequestResponse> cb);
 }

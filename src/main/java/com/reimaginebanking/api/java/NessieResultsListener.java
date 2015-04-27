@@ -5,5 +5,5 @@ package com.reimaginebanking.api.java;
  */
 public interface NessieResultsListener {
     public void onSuccess(NessieType callbackType, Object result);
-    public void onFailure(Object error);
+    public void onFailure(NessieException error);
 }

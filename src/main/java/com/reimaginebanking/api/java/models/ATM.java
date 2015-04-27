@@ -13,8 +13,9 @@ public class ATM {
     private List<String> hours;
     private Address address;
     private long amount_left;
+    private Geocode geocode;
 
-    public ATM(String _id, String accessibility, String name, List<String> language_list, List<String> hours, Address address, long amount_left) {
+    public ATM(String _id, String accessibility, String name, List<String> language_list, List<String> hours, Address address, long amount_left, Geocode geocode) {
         this._id = _id;
         this.accessibility = accessibility;
         this.name = name;
@@ -22,6 +23,7 @@ public class ATM {
         this.hours = hours;
         this.address = address;
         this.amount_left = amount_left;
+        this.geocode = geocode;
     }
 
     public String get_id() {
@@ -50,6 +52,14 @@ public class ATM {
 
     public long getAmount_left() {
         return amount_left;
+    }
+
+    public Geocode getGeocode() {
+        return geocode;
+    }
+
+    public void setGeocode(Geocode geocode) {
+        this.geocode = geocode;
     }
 
     @Override
