@@ -9,14 +9,14 @@ public class Address {
     private String street_number;
     private String city;
     private String street_name;
-    private String zip;
+    //private String zip;
 
-    public Address(String state, String street_number, String city, String street_name, String zip) {
+    public Address(String state, String street_number, String city, String street_name) {
         this.state = state;
         this.street_number = street_number;
         this.city = city;
         this.street_name = street_name;
-        this.zip = zip;
+        //this.zip = zip;
     }
 
     public String getState() {
@@ -51,36 +51,36 @@ public class Address {
         this.street_name = street_name;
     }
 
-    public String getZip() {
-        return zip;
-    }
+//    public String getZip() {
+//        return zip;
+//    }
+//
+//    public void setZip(String zip) {
+//        this.zip = zip;
+//    }
 
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Address address = (Address) o;
-
-        if (!state.equals(address.state)) return false;
-        if (!street_number.equals(address.street_number)) return false;
-        if (!city.equals(address.city)) return false;
-        if (!street_name.equals(address.street_name)) return false;
-        return zip.equals(address.zip);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = state.hashCode();
-        result = 31 * result + street_number.hashCode();
-        result = 31 * result + city.hashCode();
-        result = 31 * result + street_name.hashCode();
-        result = 31 * result + zip.hashCode();
-        return result;
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        Address address = (Address) o;
+//
+//        if (!state.equals(address.state)) return false;
+//        if (!street_number.equals(address.street_number)) return false;
+//        if (!city.equals(address.city)) return false;
+//        if (!street_name.equals(address.street_name)) return false;
+//        return zip.equals(address.zip);
+//
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int result = state.hashCode();
+//        result = 31 * result + street_number.hashCode();
+//        result = 31 * result + city.hashCode();
+//        result = 31 * result + street_name.hashCode();
+//        result = 31 * result + zip.hashCode();
+//        return result;
+//    }
 }

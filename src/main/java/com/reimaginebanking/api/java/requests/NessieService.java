@@ -28,25 +28,48 @@ public interface NessieService {
     @GET("/customers")
     void getCustomers(@Query("key") String key, Callback<List<Customer>> cb);
 
+    @GET("/enterprise/customers")
+    void getCustomersAsEnterprise(@Query("key") String key, Callback<List<Customer>> cb);
+
     @GET("/customers/{id}")
     void getCustomer(@Query("key") String key, @Path("id") String id, Callback<Customer> cb);
+
+    @GET("/enterprise/customers/{id}")
+    void getCustomerAsEnterprise(@Query("key") String key, @Path("id") String id, Callback<Customer> cb);
 
     @GET("/customers/{id}/accounts")
     void getCustomerAccounts(@Query("key") String key, @Path("id") String id, Callback<List<Account>> cb);
 
+    @GET("/enterprise/customers/{id}/accounts")
+    void getCustomerAccountsAsEnterprise(@Query("key") String key, @Path("id") String id, Callback<List<Account>> cb);
+
     @GET("/customers/{id}/bills")
     void getCustomerBills(@Query("key") String key, @Path("id") String id, Callback<List<Bill>> cb);
 
+    @GET("/enterprise/customers/{id}/bills")
+    void getCustomerBillsAsEnterprise(@Query("key") String key, @Path("id") String id, Callback<List<Bill>> cb);
+
     @GET("/customers/{customer_id}/bills/{bill_id}")
     void getCustomerBill(@Query("key") String key, @Path("customer_id") String customer_id, @Path("bill_id") String bill_id, Callback<Bill> cb);
+
+    @GET("/enterprise/customers/{customer_id}/bills/{bill_id}")
+    void getCustomerBillAsEnterprise(@Query("key") String key, @Path("customer_id") String customer_id, @Path("bill_id") String bill_id, Callback<Bill> cb);
 
     @Headers("Content-Type: application/json")
     @PUT("/customers/{id}")
     void updateCustomer(@Query("key") String key, @Path("id") String id, @Body Customer customer, Callback<RequestResponse> cb);
 
     @Headers("Content-Type: application/json")
+    @PUT("/enterprise/customers/{id}")
+    void updateCustomerAsEnterprise(@Query("key") String key, @Path("id") String id, @Body Customer customer, Callback<RequestResponse> cb);
+
+    @Headers("Content-Type: application/json")
     @POST("/customers/{id}/accounts")
     void createAccount(@Query("key") String key, @Path("id") String id, @Body Account account, Callback<RequestResponse> cb);
+
+    @Headers("Content-Type: application/json")
+    @POST("/enterprise/customers/{id}/accounts")
+    void createAccountAsEnterprise(@Query("key") String key, @Path("id") String id, @Body Account account, Callback<RequestResponse> cb);
 
     @GET("/branches")
     void getBranches(@Query("key") String key, Callback<List<Branch>> cb);
@@ -63,34 +86,68 @@ public interface NessieService {
     @GET("/accounts/{id}")
     void getAccount(@Query("key") String key, @Path("id") String id, Callback<Account> cb);
 
+    @GET("/enterprise/accounts/{id}")
+    void getAccountAsEnterprise(@Query("key") String key, @Path("id") String id, Callback<Account> cb);
+
     @GET("/accounts/{id}/customer")
     void getAccountCustomer(@Query("key") String key, @Path("id") String id, Callback<Customer> cb);
 
+    @GET("/enterprise/accounts/{id}/customer")
+    void getAccountCustomerAsEnterprise(@Query("key") String key, @Path("id") String id, Callback<Customer> cb);
+
     @DELETE("/accounts/{id}")
     void deleteAccount(@Query("key") String key, @Path("id") String id, Callback<RequestResponse> cb);
+
+    @DELETE("/enterprise/accounts/{id}")
+    void deleteAccountAsEnterprise(@Query("key") String key, @Path("id") String id, Callback<RequestResponse> cb);
 
     @Headers("Content-Type: application/json")
     @POST("/accounts/{id}/bills")
     void createBill(@Query("key") String key, @Path("id") String id, @Body Bill bill, Callback<RequestResponse> cb);
 
     @Headers("Content-Type: application/json")
+    @POST("/enterprise/accounts/{id}/bills")
+    void createBillAsEnterprise(@Query("key") String key, @Path("id") String id, @Body Bill bill, Callback<RequestResponse> cb);
+
+    @Headers("Content-Type: application/json")
     @PUT("/accounts/{account_id}/bills/{bill_id}")
     void updateBill(@Query("key") String key, @Path("account_id") String id, @Path("bill_id") String bill_id, @Body Bill bill, Callback<RequestResponse> cb);
+
+    @Headers("Content-Type: application/json")
+    @PUT("/enterprise/accounts/{account_id}/bills/{bill_id}")
+    void updateBillAsEnterprise(@Query("key") String key, @Path("account_id") String id, @Path("bill_id") String bill_id, @Body Bill bill, Callback<RequestResponse> cb);
 
     @Headers("Content-Type: application/json")
     @POST("/accounts/{id}/transactions")
     void createTransaction(@Query("key") String key, @Path("id") String id, @Body Transaction transaction, Callback<RequestResponse> cb);
 
+    @Headers("Content-Type: application/json")
+    @POST("/enterprise/accounts/{id}/transactions")
+    void createTransactionAsEnterprise(@Query("key") String key, @Path("id") String id, @Body Transaction transaction, Callback<RequestResponse> cb);
+
     @GET("/accounts/{id}/transactions")
     void getTransactions(@Query("key") String key, @Path("id") String id, Callback<List<Transaction>> cb);
 
+    @GET("/enterprise/accounts/{id}/transactions")
+    void getTransactionsAsEnterprise(@Query("key") String key, @Path("id") String id, Callback<List<Transaction>> cb);
+
     @GET("/accounts/{account_id}/transactions/{transaction_id}")
     void getTransaction(@Query("key") String key, @Path("account_id") String account_id, @Path("transaction_id") String transaction_id, Callback<Transaction> cb);
+
+    @GET("/enterprise/accounts/{account_id}/transactions/{transaction_id}")
+    void getTransactionAsEnterprise(@Query("key") String key, @Path("account_id") String account_id, @Path("transaction_id") String transaction_id, Callback<Transaction> cb);
 
     @Headers("Content-Type: application/json")
     @PUT("/accounts/{account_id}/transactions/{transaction_id}")
     void updateTransaction(@Query("key") String key, @Path("account_id") String account_id, @Path("transaction_id") String transaction_id, @Body Transaction transaction, Callback<Transaction> cb);
 
+    @Headers("Content-Type: application/json")
+    @PUT("/enterprise/accounts/{account_id}/transactions/{transaction_id}")
+    void updateTransactionAsEnterprise(@Query("key") String key, @Path("account_id") String account_id, @Path("transaction_id") String transaction_id, @Body Transaction transaction, Callback<Transaction> cb);
+
     @DELETE("/accounts/{account_id}/transactions/{transaction_id}")
     void deleteTransaction(@Query("key") String key, @Path("account_id") String account_id, @Path("transaction_id") String transaction_id, Callback<RequestResponse> cb);
+
+    @DELETE("/enterprise/accounts/{account_id}/transactions/{transaction_id}")
+    void deleteTransactionAsEnterprise(@Query("key") String key, @Path("account_id") String account_id, @Path("transaction_id") String transaction_id, Callback<RequestResponse> cb);
 }
