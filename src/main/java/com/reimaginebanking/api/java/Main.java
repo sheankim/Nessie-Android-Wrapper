@@ -1,6 +1,7 @@
 package com.reimaginebanking.api.java;
 
 import com.reimaginebanking.api.java.models.ATM;
+import com.reimaginebanking.api.java.models.Customer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,28 +11,47 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) {
-        String enterpriseKey = "ENT179388d26418860c1f843d36f3445445";
+        //String enterpriseKey = "ENT179388d26418860c1f843d36f3445445";
         String key = "c3f7f751db5dc04db17a1aed58d319e9";
         NessieClient nessieClient = NessieClient.getInstance();
 
-        nessieClient.setAPIKey(enterpriseKey);
+        nessieClient.setAPIKey(key);
 
-//        nessieClient.getATMs(new NessieResultsListener() {
-//            @Override
-//            public void onSuccess(Object result, NessieException e) {
-//
-//                if(e == null){
-//                    ArrayList<ATM> atms = (ArrayList<ATM>) result;
-//                    System.out.println(atms.size());
-//                    System.out.println(atms.get(0).get_id());
-//                }else {
-//                    System.out.println("THERE IS AN ERROR");
-//                    System.out.println(e.toString());
-//                }
-//            }
-//        });
-        //nessieClient.getATMs();
-        //nessieClient.getATM("10485023845702");
+        nessieClient.getCustomers(new NessieResultsListener() {
+            @Override
+            public void onSuccess(Object result, NessieException e) {
+                if (e == null) {
+                    ArrayList<Customer> customers = (ArrayList<Customer>) result;
+                    System.out.println("THIS IS THE FIRST");
+                    System.out.println(customers.size());
+                    System.out.println(customers.get(0).getFirst_name());
+                }
+            }
+        });
+
+        nessieClient.getCustomersAsEnterprise(new NessieResultsListener() {
+            @Override
+            public void onSuccess(Object result, NessieException e) {
+                if (e == null) {
+                    ArrayList<Customer> customers = (ArrayList<Customer>) result;
+                    System.out.println("THIS IS THE SECOND");
+                    System.out.println(customers.size());
+                    System.out.println(customers.get(0).getFirst_name());
+                }
+            }
+        });
+
+        nessieClient.getCustomers(new NessieResultsListener() {
+            @Override
+            public void onSuccess(Object result, NessieException e) {
+                if (e == null) {
+                    ArrayList<Customer> customers = (ArrayList<Customer>) result;
+                    System.out.println("THIS IS THE THIRD");
+                    System.out.println(customers.size());
+                    System.out.println(customers.get(1).getFirst_name());
+                }
+            }
+        });
 
         System.out.println("HELLO");
     }
