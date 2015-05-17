@@ -1,4 +1,7 @@
-package com.reimaginebanking.api.java.models;
+package com.reimaginebanking.api.java.Models;
+
+import com.google.gson.annotations.SerializedName;
+import com.reimaginebanking.api.java.Constants.AccountType;
 
 import java.util.List;
 
@@ -8,49 +11,103 @@ import java.util.List;
 public class Account {
 
     private String _id;
-    private String type;
+    private AccountType type;
     private String nickname;
     private int rewards;
-    private int balance;
+    private double balance;
     private List<String> bill_ids;
-    private String customer_id;
+    @SerializedName("customer_id")
+    private String customer;
 
-    public Account(String _id, String type, String nickname, int rewards, int balance, List<String> bill_ids, String customer_id) {
+    public Account(Builder builder){
+        this.type = builder.type;
+        this.nickname = builder.nickname;
+        this.rewards = builder.rewards;
+        this.balance = builder.balance;
+    }
+
+    public Account(String _id, AccountType type, String nickname, int rewards, double balance, List<String> bill_ids, String customer) {
         this._id = _id;
         this.type = type;
         this.nickname = nickname;
         this.rewards = rewards;
         this.balance = balance;
         this.bill_ids = bill_ids;
-        this.customer_id = customer_id;
+        this.customer = customer;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public AccountType getType() {
+        return type;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public int getRewards() {
+        return rewards;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public List<String> getBill_ids() {
+        return bill_ids;
+    }
+
+    public String getCustomer() {
+        return customer;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Account account = (Account) o;
-
-        if (rewards != account.rewards) return false;
-        if (balance != account.balance) return false;
-        if (!_id.equals(account._id)) return false;
-        if (!type.equals(account.type)) return false;
-        if (!nickname.equals(account.nickname)) return false;
-        if (!bill_ids.equals(account.bill_ids)) return false;
-        return customer_id.equals(account.customer_id);
-
+    public String toString() {
+        return "Account{" +
+                "_id='" + _id + '\'' +
+                ", type='" + type.toString() + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", rewards=" + rewards +
+                ", balance=" + balance +
+                ", bill_ids=" + bill_ids +
+                ", customer='" + customer + '\'' +
+                '}';
     }
 
-    @Override
-    public int hashCode() {
-        int result = _id.hashCode();
-        result = 31 * result + type.hashCode();
-        result = 31 * result + nickname.hashCode();
-        result = 31 * result + rewards;
-        result = 31 * result + balance;
-        result = 31 * result + bill_ids.hashCode();
-        result = 31 * result + customer_id.hashCode();
-        return result;
+    public static class Builder{
+        private AccountType type;
+        private String nickname;
+        private int rewards;
+        private double balance;
+
+        public Builder(){}
+
+        public Builder type(AccountType type){
+            this.type = type;
+            return this;
+        }
+
+        public Builder nickname(String nickname){
+            this.nickname = nickname;
+            return this;
+        }
+
+        public Builder rewards(int rewards){
+            this.rewards = rewards;
+            return this;
+        }
+
+        public Builder balance(double balance){
+            this.balance = balance;
+            return this;
+        }
+
+        public Account build(){
+            Account account = new Account(this);
+            return account;
+        }
     }
 }

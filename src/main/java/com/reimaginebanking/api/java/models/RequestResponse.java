@@ -1,4 +1,4 @@
-package com.reimaginebanking.api.java.models;
+package com.reimaginebanking.api.java.Models;
 
 /**
  * Created by kco942 on 4/9/15.
@@ -29,21 +29,10 @@ public class RequestResponse {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RequestResponse that = (RequestResponse) o;
-
-        if (code != that.code) return false;
-        return !(message != null ? !message.equals(that.message) : that.message != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = code;
-        result = 31 * result + (message != null ? message.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "RequestResponse{" +
+                "code=" + code +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

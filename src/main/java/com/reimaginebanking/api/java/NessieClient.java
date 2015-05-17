@@ -1,21 +1,27 @@
 package com.reimaginebanking.api.java;
 
 
-import com.reimaginebanking.api.java.models.ATM;
-import com.reimaginebanking.api.java.models.Account;
-import com.reimaginebanking.api.java.models.Bill;
-import com.reimaginebanking.api.java.models.Branch;
-import com.reimaginebanking.api.java.models.Customer;
-import com.reimaginebanking.api.java.models.RequestResponse;
-import com.reimaginebanking.api.java.models.Transaction;
-import com.reimaginebanking.api.java.requests.NessieService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.reimaginebanking.api.java.Adapters.BillTypeAdapter;
+import com.reimaginebanking.api.java.Models.ATM;
+import com.reimaginebanking.api.java.Models.Account;
+import com.reimaginebanking.api.java.Models.Bill;
+import com.reimaginebanking.api.java.Models.Branch;
+import com.reimaginebanking.api.java.Models.Customer;
+import com.reimaginebanking.api.java.Models.RequestResponse;
+import com.reimaginebanking.api.java.Models.Transaction;
+import com.reimaginebanking.api.java.Requests.NessieService;
 
 import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.OkClient;
 import retrofit.client.Response;
+import retrofit.converter.GsonConverter;
+import retrofit.mime.TypedByteArray;
 
 /**
  * Created by kco942 on 4/9/15.
@@ -30,13 +36,18 @@ public class NessieClient {
 
     private NessieClient() {
 
-//        RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setEndpoint("http://api.reimaginebanking.com")
-//                .build();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Bill.class, new BillTypeAdapter())
+                .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://nessie.no-ip.org")
+                .setEndpoint("http://api.reimaginebanking.com")
+                .setConverter(new GsonConverter(gson))
                 .build();
+
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint("http://nessie.no-ip.org")
+//                .build();
 
         service = restAdapter.create(NessieService.class);
 
@@ -62,17 +73,17 @@ public class NessieClient {
         });
     }
 
-    public void getCustomersAsEnterprise(final NessieResultsListener mlistener){
-        service.getCustomersAsEnterprise(this.key, new Callback<List<Customer>>() {
-            public void success(List<Customer> customers, Response response) {
-                mlistener.onSuccess(customers, null);
-            }
-
-            public void failure(RetrofitError error) {
-                mlistener.onSuccess(null, new NessieException(error));
-            }
-        });
-    }
+//    public void getCustomersAsEnterprise(final NessieResultsListener mlistener){
+//        service.getCustomersAsEnterprise(this.key, new Callback<List<Customer>>() {
+//            public void success(List<Customer> customers, Response response) {
+//                mlistener.onSuccess(customers, null);
+//            }
+//
+//            public void failure(RetrofitError error) {
+//                mlistener.onSuccess(null, new NessieException(error));
+//            }
+//        });
+//    }
 
     public void getCustomer(String customerID, final NessieResultsListener mlistener){
         service.getCustomer(this.key, customerID, new Callback<Customer>() {
@@ -97,6 +108,10 @@ public class NessieClient {
             }
         });
     }
+
+    public void test(){
+
+    }
     public void getCustomerAccounts(String customerID, final NessieResultsListener mlistener){
         service.getCustomerAccounts(this.key, customerID, new Callback<List<Account>>() {
             public void success(List<Account> accounts, Response response) {
@@ -109,12 +124,28 @@ public class NessieClient {
         });
     }
 
-    public void getCustomerAccountsAsEnterprise(String customerID, final NessieResultsListener mlistener){
-        service.getCustomerAccountsAsEnterprise(this.key, customerID, new Callback<List<Account>>() {
-            public void success(List<Account> accounts, Response response) {
-                mlistener.onSuccess(accounts, null);
+    public void getBills(String accountID, final NessieResultsListener mlistener){
+        service.getBills(this.key, accountID, new Callback<List<Bill>>() {
+            @Override
+            public void success(List<Bill> bills, Response response) {
+                mlistener.onSuccess(bills, null);
             }
 
+            @Override
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void getBill(String accountID, String billID, final NessieResultsListener mlistener){
+        service.getBill(this.key, accountID, billID, new Callback<Bill>() {
+            @Override
+            public void success(Bill bill, Response response) {
+                mlistener.onSuccess(bill, null);
+            }
+
+            @Override
             public void failure(RetrofitError error) {
                 mlistener.onSuccess(null, new NessieException(error));
             }
@@ -133,32 +164,8 @@ public class NessieClient {
         });
     }
 
-    public void getCustomerBillsAsEnterprise(String customerID, final NessieResultsListener mlistener){
-        service.getCustomerBillsAsEnterprise(this.key, customerID, new Callback<List<Bill>>() {
-            public void success(List<Bill> bills, Response response) {
-                mlistener.onSuccess(bills, null);
-            }
-
-            public void failure(RetrofitError error) {
-                mlistener.onSuccess(null, new NessieException(error));
-            }
-        });
-    }
-
     public void getCustomerBill(String customerID, String billID, final NessieResultsListener mlistener){
         service.getCustomerBill(this.key, customerID, billID, new Callback<Bill>() {
-            public void success(Bill bill, Response response) {
-                mlistener.onSuccess(bill, null);
-            }
-
-            public void failure(RetrofitError error) {
-                mlistener.onSuccess(null, new NessieException(error));
-            }
-        });
-    }
-
-    public void getCustomerBillAsEnterprise(String customerID, String billID, final NessieResultsListener mlistener){
-        service.getCustomerBillAsEnterprise(this.key, customerID, billID, new Callback<Bill>() {
             public void success(Bill bill, Response response) {
                 mlistener.onSuccess(bill, null);
             }
@@ -276,21 +283,10 @@ public class NessieClient {
         });
     }
 
-    public void getAccountCustomerAsEnterprise(String accountID, final NessieResultsListener mlistener){
-        service.getAccountCustomerAsEnterprise(this.key, accountID, new Callback<Customer>() {
-            public void success(Customer customer, Response response) {
-                mlistener.onSuccess(customer, null);
-            }
-
-            public void failure(RetrofitError error) {
-                mlistener.onSuccess(null, new NessieException(error));
-            }
-        });
-    }
-
     public void deleteAccount(String accountID, final NessieResultsListener mlistener){
         service.deleteAccount(this.key, accountID, new Callback<RequestResponse>() {
             public void success(RequestResponse requestResponse, Response response) {
+                requestResponse = new RequestResponse(response.getStatus(), "Account Deleted");
                 mlistener.onSuccess(requestResponse, null);
             }
 
@@ -348,12 +344,38 @@ public class NessieClient {
         });
     }
 
-    public void getTransactionsAsEnterprise(String accountID, final NessieResultsListener mlistener){
-        service.getTransactionsAsEnterprise(this.key, accountID, new Callback<List<Transaction>>() {
-            public void success(List<Transaction> transactions, Response response) {
-                mlistener.onSuccess(transactions, null);
+//    public void getTransactionsAsEnterprise(final NessieResultsListener mlistener){
+//        service.getTransactionsAsEnterprise(this.key, new Callback<List<Transaction>>() {
+//            public void success(List<Transaction> transactions, Response response) {
+//                mlistener.onSuccess(transactions, null);
+//            }
+//
+//            public void failure(RetrofitError error) {
+//                mlistener.onSuccess(null, new NessieException(error));
+//            }
+//        });
+//    }
+
+//    public void getTransactionsAsEnterprise(final NessieResultsListener mlistener){
+//        service.getTransactionsAsEnterprise(this.key, new Callback<Object>() {
+//            public void success(Object object, Response response) {
+//                mlistener.onSuccess(object, null);
+//            }
+//
+//            public void failure(RetrofitError error) {
+//                mlistener.onSuccess(null, new NessieException(error));
+//            }
+//        });
+//    }
+
+    public void getCustomersAsEnterprise(final NessieResultsListener mlistener){
+        service.getCustomersAsEnterprise(this.key, new Callback<List<Customer>>() {
+            @Override
+            public void success(List<Customer> customers, Response response) {
+                mlistener.onSuccess(customers, null);
             }
 
+            @Override
             public void failure(RetrofitError error) {
                 mlistener.onSuccess(null, new NessieException(error));
             }
@@ -362,18 +384,6 @@ public class NessieClient {
 
     public void getTransaction(String accountID, String transactionID, final NessieResultsListener mlistener){
         service.getTransaction(this.key, accountID, transactionID, new Callback<Transaction>() {
-            public void success(Transaction transaction, Response response) {
-                mlistener.onSuccess(transaction, null);
-            }
-
-            public void failure(RetrofitError error) {
-                mlistener.onSuccess(null, new NessieException(error));
-            }
-        });
-    }
-
-    public void getTransactionAsEnterprise(String accountID, String transactionID, final NessieResultsListener mlistener){
-        service.getTransactionAsEnterprise(this.key, accountID, transactionID, new Callback<Transaction>() {
             public void success(Transaction transaction, Response response) {
                 mlistener.onSuccess(transaction, null);
             }
@@ -402,6 +412,196 @@ public class NessieClient {
                 mlistener.onSuccess(requestResponse, null);
             }
 
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void getAccountsAsEnterprise(final NessieResultsListener mlistener){
+        service.getAccountsAsEnterprise(this.key, new Callback<List<Account>>() {
+            public void success(List<Account> accounts, Response response) {
+                mlistener.onSuccess(accounts, null);
+            }
+
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void getBillsAsEnterprise(final NessieResultsListener mlistener){
+        service.getBillsAsEnterprise(this.key, new Callback<List<Bill>>() {
+            public void success(List<Bill> bills, Response response) {
+                mlistener.onSuccess(bills, null);
+            }
+
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void getBillAsEnterprise(String billID, final NessieResultsListener mlistener){
+        service.getBillAsEnterprise(this.key, billID, new Callback<Bill>() {
+            public void success(Bill bill, Response response) {
+                mlistener.onSuccess(bill, null);
+            }
+
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void getTransactionAsEnterprise(String transactionID, final NessieResultsListener mlistener){
+        service.getTransactionAsEnterprise(this.key, transactionID, new Callback<Transaction>() {
+            public void success(Transaction transaction, Response response) {
+                mlistener.onSuccess(transaction, null);
+            }
+
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void createDeposit(String accountId, Transaction deposit, final NessieResultsListener mlistener){
+        service.createDeposit(this.key, accountId, deposit, new Callback<RequestResponse>() {
+
+            @Override
+            public void success(RequestResponse requestResponse, Response response) {
+                mlistener.onSuccess(requestResponse, null);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void getDeposits(String accountId, final NessieResultsListener mlistener){
+        service.getDeposits(this.key, accountId, new Callback<List<Transaction>>() {
+            @Override
+            public void success(List<Transaction> transactions, Response response) {
+                mlistener.onSuccess(transactions, null);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void getDeposit(String accountId, String depositId, final NessieResultsListener mlistener){
+        service.getDeposit(this.key, accountId, depositId, new Callback<Transaction>() {
+            @Override
+            public void success(Transaction transaction, Response response) {
+                mlistener.onSuccess(transaction, null);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void updateDeposit(String accountId, String depositId, Transaction deposit, final NessieResultsListener mlistener){
+        service.updateDeposit(this.key, accountId, depositId, deposit, new Callback<RequestResponse>() {
+            @Override
+            public void success(RequestResponse requestResponse, Response response) {
+                mlistener.onSuccess(requestResponse, null);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void deleteDeposit(String accountId, String depositId, final NessieResultsListener mlistener){
+        service.deleteDeposit(this.key, accountId, depositId, new Callback<RequestResponse>() {
+            @Override
+            public void success(RequestResponse requestResponse, Response response) {
+                mlistener.onSuccess(requestResponse, null);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void createWithdrawal(String accountId, Transaction withdrawal, final NessieResultsListener mlistener){
+        service.createWithdrawal(this.key, accountId, withdrawal, new Callback<RequestResponse>() {
+
+            @Override
+            public void success(RequestResponse requestResponse, Response response) {
+                mlistener.onSuccess(requestResponse, null);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void getWithdrawals(String accountId, final NessieResultsListener mlistener){
+        service.getWithdrawals(this.key, accountId, new Callback<List<Transaction>>() {
+            @Override
+            public void success(List<Transaction> transactions, Response response) {
+                mlistener.onSuccess(transactions, null);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void getWithdrawal(String accountId, String withdrawalId, final NessieResultsListener mlistener){
+        service.getWithdrawal(this.key, accountId, withdrawalId, new Callback<Transaction>() {
+            @Override
+            public void success(Transaction transaction, Response response) {
+                mlistener.onSuccess(transaction, null);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void updateWithdrawal(String accountId, String withdrawalId, Transaction withdrawal, final NessieResultsListener mlistener){
+        service.updateWithdrawal(this.key, accountId, withdrawalId, withdrawal, new Callback<RequestResponse>() {
+            @Override
+            public void success(RequestResponse requestResponse, Response response) {
+                mlistener.onSuccess(requestResponse, null);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mlistener.onSuccess(null, new NessieException(error));
+            }
+        });
+    }
+
+    public void deleteWithdrawal(String accountId, String withdrawalId, final NessieResultsListener mlistener){
+        service.deleteWithdrawal(this.key, accountId, withdrawalId, new Callback<RequestResponse>() {
+            @Override
+            public void success(RequestResponse requestResponse, Response response) {
+                mlistener.onSuccess(requestResponse, null);
+            }
+
+            @Override
             public void failure(RetrofitError error) {
                 mlistener.onSuccess(null, new NessieException(error));
             }

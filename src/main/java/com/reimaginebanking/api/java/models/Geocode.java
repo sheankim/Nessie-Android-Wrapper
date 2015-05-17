@@ -1,4 +1,4 @@
-package com.reimaginebanking.api.java.models;
+package com.reimaginebanking.api.java.Models;
 
 /**
  * Created by kco942 on 4/9/15.
@@ -23,5 +23,13 @@ public class Geocode {
 
     public float getLat() {
         return lat;
+    }
+
+    @Override
+    public String toString() {
+        return "Geocode{" +
+                "lng=" + lng +
+                ", lat=" + lat +
+                '}';
     }
 }

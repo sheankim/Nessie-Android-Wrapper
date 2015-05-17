@@ -1,4 +1,4 @@
-package com.reimaginebanking.api.java.models;
+package com.reimaginebanking.api.java.Models;
 
 import java.util.List;
 
@@ -14,6 +14,7 @@ public class ATM {
     private Address address;
     private long amount_left;
     private Geocode geocode;
+
 
     public ATM(String _id, String accessibility, String name, List<String> language_list, List<String> hours, Address address, long amount_left, Geocode geocode) {
         this._id = _id;
@@ -63,33 +64,16 @@ public class ATM {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ATM atm = (ATM) o;
-
-        if (amount_left != atm.amount_left) return false;
-        if (_id != null ? !_id.equals(atm._id) : atm._id != null) return false;
-        if (accessibility != null ? !accessibility.equals(atm.accessibility) : atm.accessibility != null) return false;
-        if (name != null ? !name.equals(atm.name) : atm.name != null) return false;
-        if (language_list != null ? !language_list.equals(atm.language_list) : atm.language_list != null) return false;
-        if (hours != null ? !hours.equals(atm.hours) : atm.hours != null) return false;
-        return address.equals(atm.address);
-
+    public String toString() {
+        return "ATM{" +
+                "_id='" + _id + '\'' +
+                ", accessibility='" + accessibility + '\'' +
+                ", name='" + name + '\'' +
+                ", language_list=" + language_list +
+                ", hours=" + hours +
+                ", address=" + address +
+                ", amount_left=" + amount_left +
+                ", geocode=" + geocode +
+                '}';
     }
-
-    @Override
-    public int hashCode() {
-        int result = _id != null ? _id.hashCode() : 0;
-        result = 31 * result + (accessibility != null ? accessibility.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (language_list != null ? language_list.hashCode() : 0);
-        result = 31 * result + (hours != null ? hours.hashCode() : 0);
-        result = 31 * result + address.hashCode();
-        result = 31 * result + (int) (amount_left ^ (amount_left >>> 32));
-        return result;
-    }
-
-
 }
