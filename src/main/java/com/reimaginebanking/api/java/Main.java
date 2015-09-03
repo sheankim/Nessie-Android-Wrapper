@@ -19,7 +19,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         //String key = "c3f7f751db5dc04db17a1aed58d319e9";
-        String key = "c8401d90ec390300090ef500d40b3ebc";
+        String key = "c5eb47e52df8d39d9e7d861e45fa325e";
         NessieClient nessieClient = NessieClient.getInstance();
 
         nessieClient.setAPIKey(key);
@@ -66,38 +66,38 @@ public class Main {
 //        });
 
 
-        //WORKS
-//        nessieClient.getCustomers(new NessieResultsListener() {
-//            @Override
-//            public void onSuccess(Object result, NessieException e) {
-//                if (e == null) {
-//                    ArrayList<Customer> customers = (ArrayList<Customer>) result;
-//                    System.out.println("CUSTOMERS TEST");
-//                    System.out.println(customers.size());
-//                    //System.out.println(customers.get(0).toString());
-//                    for(Customer customer: customers){
-//                        System.out.println(customer.toString());
-//                    }
-//                } else {
-//                    System.out.println("CUSTOMERS TEST");
-//                    System.out.println(e.toString());
-//                }
-//            }
-//        });
-//
-        nessieClient.getCustomersAsEnterprise(new NessieResultsListener() {
+//        //WORKS
+        nessieClient.getCustomers(new NessieResultsListener() {
             @Override
             public void onSuccess(Object result, NessieException e) {
                 if (e == null) {
                     ArrayList<Customer> customers = (ArrayList<Customer>) result;
-                    System.out.println("ENTERPRISE CUSTOMERS TEST");
+                    System.out.println("CUSTOMERS TEST");
                     System.out.println(customers.size());
-                    System.out.println(customers.get(0).toString());
-                }else {
+                    //System.out.println(customers.get(0).toString());
+                    for(Customer customer: customers){
+                        System.out.println(customer.toString());
+                    }
+                } else {
+                    System.out.println("CUSTOMERS TEST");
                     System.out.println(e.toString());
                 }
             }
         });
+////
+//        nessieClient.getCustomersAsEnterprise(new NessieResultsListener() {
+//            @Override
+//            public void onSuccess(Object result, NessieException e) {
+//                if (e == null) {
+//                    ArrayList<Customer> customers = (ArrayList<Customer>) result;
+//                    System.out.println("ENTERPRISE CUSTOMERS TEST");
+//                    System.out.println(customers.size());
+//                    System.out.println(customers.get(0).toString());
+//                }else {
+//                    System.out.println(e.toString());
+//                }
+//            }
+//        });
 //
 
 
@@ -247,24 +247,24 @@ public class Main {
 //        });
 
         //WORKS
-//        Account account = new Account.Builder()
-//                .type(AccountType.CHECKING)
-//                .nickname("TEST ACCOUNT")
-//                .rewards(100)
-//                .balance(100)
-//                .build();
-//        nessieClient.createAccount("5516c07ba520e0066c9ac365", account, new NessieResultsListener() {
-//            @Override
-//            public void onSuccess(Object result, NessieException e) {
-//                if (e == null) {
-//                    RequestResponse response = (RequestResponse) result;
-//                    System.out.println("CREATE ACCOUNT TEST");
-//                    System.out.println(response.toString());
-//                } else {
-//                    System.out.println(e.toString());
-//                }
-//            }
-//        });
+        Account account = new Account.Builder()
+                .type(AccountType.CHECKING)
+                .nickname("TEST ACCOUNT")
+                .rewards(100)
+                .balance(100)
+                .build();
+        nessieClient.createAccount("555bed95a520e036e52b20fe", account, new NessieResultsListener() {
+            @Override
+            public void onSuccess(Object result, NessieException e) {
+                if (e == null) {
+                    RequestResponse response = (RequestResponse) result;
+                    System.out.println("CREATE ACCOUNT TEST");
+                    System.out.println(response.toString());
+                } else {
+                    System.out.println(e.toString());
+                }
+            }
+        });
 
         //WORKS
 //        nessieClient.getBranches(new NessieResultsListener() {
@@ -401,7 +401,7 @@ public class Main {
 //            }
 //        });
 
-//        Transaction transaction = new Transaction.Builder()
+//        Transfer transaction = new Transfer.Builder()
 //                .medium(TransactionMedium.BALANCE)
 //                .payee_id("5516c07ba520e0066c9ac6e")
 //                .amount(10)
@@ -425,7 +425,7 @@ public class Main {
 //            @Override
 //            public void onSuccess(Object result, NessieException e) {
 //                if (e == null) {
-//                    ArrayList<Transaction> transactions = (ArrayList<Transaction>) result;
+//                    ArrayList<Transfer> transactions = (ArrayList<Transfer>) result;
 //                    System.out.println("TRANSACTIONS TEST");
 //                    System.out.println(transactions.size());
 //                    if(transactions.size() > 0) {
@@ -443,7 +443,7 @@ public class Main {
 //            @Override
 //            public void onSuccess(Object result, NessieException e) {
 //                if (e == null) {
-//                    Transaction transaction = (Transaction) result;
+//                    Transfer transaction = (Transfer) result;
 //                    System.out.println("TRANSACTION TEST");
 //                    System.out.println(transaction.toString());
 //                }
@@ -480,7 +480,7 @@ public class Main {
 //            @Override
 //            public void onSuccess(Object result, NessieException e) {
 //                if (e == null) {
-//                    ArrayList<Transaction> transactions = (ArrayList<Transaction>) result;
+//                    ArrayList<Transfer> transactions = (ArrayList<Transfer>) result;
 //                    System.out.println(transactions.size());
 //                    System.out.println(transactions.get(0).toString());
 //                }
@@ -492,7 +492,7 @@ public class Main {
 //            @Override
 //            public void onSuccess(Object result, NessieException e) {
 //                if (e == null) {
-//                    Transaction transaction = (Transaction) result;
+//                    Transfer transaction = (Transfer) result;
 //                    System.out.println(transaction.toString());
 //                } else {
 //                    System.out.println(e.toString());
@@ -516,7 +516,7 @@ public class Main {
         //////////////////////////////////////////
 
         //works
-//        Transaction deposit = new Transaction.Builder()
+//        Transfer deposit = new Transfer.Builder()
 //                .medium(TransactionMedium.BALANCE)
 //                .amount(10.10)
 //                .description("PAYCHECK")
@@ -534,7 +534,7 @@ public class Main {
 //            }
 //        });
 
-//        Transaction withdraw = new Transaction.Builder()
+//        Transfer withdraw = new Transfer.Builder()
 //                .medium(TransactionMedium.BALANCE)
 //                .amount(10.10)
 //                .description("PAYCHECK")
@@ -555,9 +555,9 @@ public class Main {
 //        nessieClient.getDeposits("5516c07ba520e0066c9ac73c", new NessieResultsListener() {
 //            @Override
 //            public void onSuccess(Object result, NessieException e) {
-//                List<Transaction> deposits = (List<Transaction>) result;
+//                List<Transfer> deposits = (List<Transfer>) result;
 //                System.out.println(deposits.size());
-//                for(Transaction deposit : deposits){
+//                for(Transfer deposit : deposits){
 //                    System.out.println(deposit.toString());
 //                }
 //            }
