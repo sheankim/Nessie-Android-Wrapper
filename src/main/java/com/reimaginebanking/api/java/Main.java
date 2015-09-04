@@ -1,7 +1,6 @@
 package com.reimaginebanking.api.java;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import com.reimaginebanking.api.java.Adapters.BillTypeAdapter;
 import com.reimaginebanking.api.java.Constants.AccountType;
 import com.reimaginebanking.api.java.Constants.BillStatus;
